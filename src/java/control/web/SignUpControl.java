@@ -5,7 +5,7 @@
 
 package control.web;
 
-import dao.DAO;
+import dao.DAOUser;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +30,7 @@ public class SignUpControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String acountName = request.getParameter("acount_name");
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         String re_pass = request.getParameter("repass");
@@ -38,11 +39,11 @@ public class SignUpControl extends HttpServlet {
         }
         // Sign up
         else {
-            DAO dao = new DAO();
-            Account a = dao.checkAccountExist(user);
+            DAOUser daoU = new DAOUser();
+            Account a = daoU.checkAccountExist(user);
             if (a == null) {
                 // process signup
-                dao.signup(user, pass);
+                daoU.signup(acountName, user, pass);
                 response.sendRedirect("Home.jsp");
             }
             else {

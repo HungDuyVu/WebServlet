@@ -1,37 +1,67 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entity;
 
-/**
- *
- * @author OS
- */
 public class Account {
+    public enum Status {
+        IS_ACTIVE("isActive"),
+        IS_BLOCK("isBlock"),
+        IS_DELETE("isDelete");
+
+        private final String value;
+
+        Status(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public static Status fromValue(String value) {
+            for (Status status : Status.values()) {
+                if (status.value.equals(value)) {
+                    return status;
+                }
+            }
+            throw new IllegalArgumentException("Unknown status: " + value);
+        }
+    }
+
     private int id;
+    private String nameAccount; 
     private String user;
     private String pass;
     private int isSell;
     private int isAdmin;
+    private Status status; // Trạng thái sử dụng enum
 
     public Account() {
     }
 
-    public Account(int id, String user, String pass, int isSell, int isAdmin) {
+    public Account(int id, String nameAccount, String user, String pass, int isSell, int isAdmin, Status status) {
         this.id = id;
+        this.nameAccount = nameAccount;
         this.user = user;
         this.pass = pass;
         this.isSell = isSell;
         this.isAdmin = isAdmin;
+        this.status = status;
     }
 
+    // Getter và setter cho các trường
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNameAccount() {
+        return nameAccount;
+    }
+
+    public void setNameAccount(String nameAccount) {
+        this.nameAccount = nameAccount;
     }
 
     public String getUser() {
@@ -66,10 +96,16 @@ public class Account {
         this.isAdmin = isAdmin;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", user=" + user + ", pass=" + pass + ", isSell=" + isSell + ", isAdmin=" + isAdmin + '}';
+        return "Account{" + "id=" + id + ", nameAccount=" + nameAccount + ", user=" + user + ", pass=" + pass + ", isSell=" + isSell + ", isAdmin=" + isAdmin + ", status=" + status + '}';
     }
-    
-    
 }

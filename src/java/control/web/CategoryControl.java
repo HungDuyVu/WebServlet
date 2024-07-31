@@ -5,7 +5,7 @@
 
 package control.web;
 
-import dao.DAO;
+import dao.DAOProduct;
 import entity.Category;
 import entity.Product;
 import java.io.IOException;
@@ -35,10 +35,10 @@ public class CategoryControl extends HttpServlet {
         // Lay categoryID ve
         String cateID = request.getParameter("cid");
         
-        DAO dao = new DAO();
-        List<Product> list = dao.getProductByCID(cateID);
-        List<Category> listC = dao.getAllCategory();
-        Product last = dao.getLast();
+        DAOProduct daoP = new DAOProduct();
+        List<Product> list = daoP.getProductByCID(cateID);
+        List<Category> listC = daoP.getAllCategory();
+        Product last = daoP.getLast();
         
         request.setAttribute("listP", list);
         request.setAttribute("listCC", listC);

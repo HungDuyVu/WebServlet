@@ -5,24 +5,19 @@
 
 package control.admin;
 
-import dao.DAO;
-import entity.Account;
-import entity.Category;
-import entity.Product;
+import dao.DAOProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
  * @author OS
  */
-public class ManagerControl extends HttpServlet {
+public class DeleteProductControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,16 +29,10 @@ public class ManagerControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("acc");
-        int id = a.getId();
-        DAO dao = new DAO();
-        List<Product> list = dao.getProductBySellID(id);
-        List<Category> listC = dao.getAllCategory();
-
-        request.setAttribute("listCC", listC);
-        request.setAttribute("listP", list);
-        request.getRequestDispatcher("ManagerProduct.jsp").forward(request, response);
+        String pid = request.getParameter("pid");
+        DAOProduct daoP = new DAOProduct();
+        daoP.deleteProduct(pid);
+        response.sendRedirect("manager");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

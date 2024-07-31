@@ -5,7 +5,7 @@
 
 package control.web;
 
-import dao.DAO;
+import dao.DAOProduct;
 import entity.Category;
 import entity.Product;
 import java.io.IOException;
@@ -34,11 +34,11 @@ public class SearchControl extends HttpServlet {
        response.setContentType("text/html;charset=UTF-8");
        request.setCharacterEncoding("UTF-8");
        String textSearch = request.getParameter("txt");
-       DAO dao = new DAO();
+        DAOProduct daoP = new DAOProduct();
        
-        List<Product> list = dao.searchByName(textSearch);
-        List<Category> listC = dao.getAllCategory();
-        Product last = dao.getLast();
+        List<Product> list = daoP.searchByName(textSearch);
+        List<Category> listC = daoP.getAllCategory();
+        Product last = daoP.getLast();
         
         request.setAttribute("listP", list);
         request.setAttribute("listCC", listC);

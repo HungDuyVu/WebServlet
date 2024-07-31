@@ -5,7 +5,7 @@
 
 package control.web;
 
-import dao.DAO;
+import dao.DAOProduct;
 import entity.Category;
 import entity.Product;
 import java.io.IOException;
@@ -33,10 +33,10 @@ public class DetailControl extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("pid");
-        DAO dao = new DAO();
-        Product p = dao.getProductByID(id);
-        List<Category> listC = dao.getAllCategory();
-        Product last = dao.getLast();
+        DAOProduct daoP = new DAOProduct();
+        Product p = daoP.getProductByID(id);
+        List<Category> listC = daoP.getAllCategory();
+        Product last = daoP.getLast();
         
         request.setAttribute("detail", p);
         request.setAttribute("listCC", listC);

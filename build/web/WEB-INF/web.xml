@@ -30,11 +30,11 @@
     </servlet>
     <servlet>
         <servlet-name>ManagerControl</servlet-name>
-        <servlet-class>control.admin.ManagerControl</servlet-class>
+        <servlet-class>control.admin.ManagerProductControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteControl</servlet-name>
-        <servlet-class>control.admin.DeleteControl</servlet-class>
+        <servlet-class>control.admin.DeleteProductControl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>homeControl</servlet-name>

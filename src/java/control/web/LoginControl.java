@@ -5,7 +5,7 @@
 
 package control.web;
 
-import dao.DAO;
+import dao.DAOUser;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,9 +33,9 @@ public class LoginControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
-        DAO dao = new DAO();
+        DAOUser daoU = new DAOUser();
         
-        Account a = dao.login(username, password);
+        Account a = daoU.login(username, password);
         if (a == null) {
             request.setAttribute("mess", "Wrong user or pass");
             request.getRequestDispatcher("Login.jsp").forward(request, response);

@@ -1,6 +1,6 @@
 package control.web;
 
-import dao.DAO;
+import dao.DAOProduct;
 import entity.Category;
 import entity.Product;
 import java.io.IOException;
@@ -17,10 +17,10 @@ public class HomeControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // b1: get data from DAO
-        DAO dao = new DAO();
-        List<Product> list = dao.getAllProduct();
-        List<Category> listC = dao.getAllCategory();
-        Product last = dao.getLast();
+        DAOProduct daoP = new DAOProduct();
+        List<Product> list = daoP.getAllProduct();
+        List<Category> listC = daoP.getAllCategory();
+        Product last = daoP.getLast();
         
         //b2: set data to jsp
         request.setAttribute("listP", list);
