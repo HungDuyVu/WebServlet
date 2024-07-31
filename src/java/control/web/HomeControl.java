@@ -1,4 +1,4 @@
-package control;
+package control.web;
 
 import dao.DAO;
 import entity.Category;

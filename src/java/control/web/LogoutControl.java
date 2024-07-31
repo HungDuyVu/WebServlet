@@ -3,24 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package control;
+package control.web;
 
-import dao.DAO;
-import entity.Category;
-import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author OS
  */
-public class CategoryControl extends HttpServlet {
+public class LogoutControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,19 +29,9 @@ public class CategoryControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // Lay categoryID ve
-        String cateID = request.getParameter("cid");
-        
-        DAO dao = new DAO();
-        List<Product> list = dao.getProductByCID(cateID);
-        List<Category> listC = dao.getAllCategory();
-        Product last = dao.getLast();
-        
-        request.setAttribute("listP", list);
-        request.setAttribute("listCC", listC);
-        request.setAttribute("p", last);
-        request.setAttribute("tag", cateID);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        session.removeAttribute("acc");
+        response.sendRedirect("home");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

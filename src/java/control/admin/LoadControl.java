@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package control;
+package control.admin;
 
 import dao.DAO;
+import entity.Category;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,13 +15,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author OS
  */
-@WebServlet(name="EditControl", urlPatterns={"/edit"})
-public class EditControl extends HttpServlet {
+@WebServlet(name="LoadControl", urlPatterns={"/loadProduct"})
+public class LoadControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,17 +34,14 @@ public class EditControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String pid = request.getParameter("id");
-        String pname = request.getParameter("name");
-        String pimage = request.getParameter("image");
-        String pprice = request.getParameter("price");
-        String ptitle = request.getParameter("title");
-        String pdescription = request.getParameter("description");
-        String pcategory = request.getParameter("category");
+        String id = request.getParameter("pid");
         DAO dao = new DAO();
-        dao.editProduct(pname, pimage, pprice, ptitle, pdescription, pcategory, pid);
-        response.sendRedirect("manager");
+        Product p = dao.getProductByID(id);
+        List<Category> listC = dao.getAllCategory();
+
+        request.setAttribute("detail", p);
+        request.setAttribute("listCC", listC);
+        request.getRequestDispatcher("Edit.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

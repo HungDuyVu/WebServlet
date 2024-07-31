@@ -3,24 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package control;
+package control.admin;
 
 import dao.DAO;
-import entity.Category;
-import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author OS
  */
-public class DetailControl extends HttpServlet {
+public class DeleteControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,16 +29,10 @@ public class DetailControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("pid");
+        String pid = request.getParameter("pid");
         DAO dao = new DAO();
-        Product p = dao.getProductByID(id);
-        List<Category> listC = dao.getAllCategory();
-        Product last = dao.getLast();
-        
-        request.setAttribute("detail", p);
-        request.setAttribute("listCC", listC);
-        request.setAttribute("p", last);
-        request.getRequestDispatcher("Detail.jsp").forward(request, response);
+        dao.DeleteProduct(pid);
+        response.sendRedirect("manager");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

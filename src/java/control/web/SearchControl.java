@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package control;
+package control.web;
 
 import dao.DAO;
 import entity.Category;
@@ -11,7 +11,6 @@ import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,8 +20,7 @@ import java.util.List;
  *
  * @author OS
  */
-@WebServlet(name="LoadControl", urlPatterns={"/loadProduct"})
-public class LoadControl extends HttpServlet {
+public class SearchControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,15 +31,20 @@ public class LoadControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("pid");
-        DAO dao = new DAO();
-        Product p = dao.getProductByID(id);
+       response.setContentType("text/html;charset=UTF-8");
+       request.setCharacterEncoding("UTF-8");
+       String textSearch = request.getParameter("txt");
+       DAO dao = new DAO();
+       
+        List<Product> list = dao.searchByName(textSearch);
         List<Category> listC = dao.getAllCategory();
-
-        request.setAttribute("detail", p);
+        Product last = dao.getLast();
+        
+        request.setAttribute("listP", list);
         request.setAttribute("listCC", listC);
-        request.getRequestDispatcher("Edit.jsp").forward(request, response);
+        request.setAttribute("p", last);
+        request.setAttribute("txts", textSearch);
+        request.getRequestDispatcher("Home.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package control;
+package control.admin;
 
 import dao.DAO;
 import entity.Account;
+import entity.Category;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,12 +16,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author OS
  */
-public class LoginControl extends HttpServlet {
+public class ManagerControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,28 +34,17 @@ public class LoginControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
+        int id = a.getId();
         DAO dao = new DAO();
-        
-        Account a = dao.login(username, password);
-        if (a == null) {
-            request.setAttribute("mess", "Wrong user or pass");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        }
-        else {
-            HttpSession session = request.getSession();
-            session.setAttribute("acc", a);
-//            session.setMaxInactiveInterval(10);
-            // Chuyen trang ma can mang du lieu di
-            request.getRequestDispatcher("home").forward(request, response);
-            // chuyen trang ma khong can mang theo du lieu
-//            response.sendRedirect("home");
-        }
+        List<Product> list = dao.getProductBySellID(id);
+        List<Category> listC = dao.getAllCategory();
+
+        request.setAttribute("listCC", listC);
+        request.setAttribute("listP", list);
+        request.getRequestDispatcher("ManagerProduct.jsp").forward(request, response);
     } 
-//    public static void main(String[] args) {
-//        System.out.println();
-//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

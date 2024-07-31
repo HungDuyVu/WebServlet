@@ -2,39 +2,39 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>homeControl</servlet-name>
-        <servlet-class>control.HomeControl</servlet-class>
+        <servlet-class>control.web.HomeControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CategoryControl</servlet-name>
-        <servlet-class>control.CategoryControl</servlet-class>
+        <servlet-class>control.web.CategoryControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DetailControl</servlet-name>
-        <servlet-class>control.DetailControl</servlet-class>
+        <servlet-class>control.web.DetailControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchControl</servlet-name>
-        <servlet-class>control.SearchControl</servlet-class>
+        <servlet-class>control.web.SearchControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginControl</servlet-name>
-        <servlet-class>control.LoginControl</servlet-class>
+        <servlet-class>control.web.LoginControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignUpControl</servlet-name>
-        <servlet-class>control.SignUpControl</servlet-class>
+        <servlet-class>control.web.SignUpControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutControl</servlet-name>
-        <servlet-class>control.LogoutControl</servlet-class>
+        <servlet-class>control.web.LogoutControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManagerControl</servlet-name>
-        <servlet-class>control.ManagerControl</servlet-class>
+        <servlet-class>control.admin.ManagerControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteControl</servlet-name>
-        <servlet-class>control.DeleteControl</servlet-class>
+        <servlet-class>control.admin.DeleteControl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>homeControl</servlet-name>
