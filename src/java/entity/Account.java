@@ -1,10 +1,12 @@
 package entity;
 
+import java.util.Date;
+
 public class Account {
     public enum Status {
         IS_ACTIVE("isActive"),
         IS_BLOCK("isBlock"),
-        IS_DELETE("isDelete");
+        IS_DELETE("isDelete"),;
 
         private final String value;
 
@@ -33,11 +35,12 @@ public class Account {
     private int isSell;
     private int isAdmin;
     private Status status; // Trạng thái sử dụng enum
+    private Date deletedAt;
 
     public Account() {
     }
 
-    public Account(int id, String nameAccount, String user, String pass, int isSell, int isAdmin, Status status) {
+    public Account(int id, String nameAccount, String user, String pass, int isSell, int isAdmin, Status status, Date deletedAt) {
         this.id = id;
         this.nameAccount = nameAccount;
         this.user = user;
@@ -45,6 +48,7 @@ public class Account {
         this.isSell = isSell;
         this.isAdmin = isAdmin;
         this.status = status;
+        this.deletedAt = deletedAt;
     }
 
     // Getter và setter cho các trường
@@ -104,8 +108,18 @@ public class Account {
         this.status = status;
     }
 
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", nameAccount=" + nameAccount + ", user=" + user + ", pass=" + pass + ", isSell=" + isSell + ", isAdmin=" + isAdmin + ", status=" + status + '}';
+        return "Account{" + "id=" + id + ", nameAccount=" + nameAccount + ", user=" + user + ", pass=" + pass + ", isSell=" + isSell + ", isAdmin=" + isAdmin + ", status=" + status + ", deletedAt=" + deletedAt + '}';
     }
+
+    
 }

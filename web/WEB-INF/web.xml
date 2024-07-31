@@ -36,6 +36,22 @@
         <servlet-name>DeleteControl</servlet-name>
         <servlet-class>control.admin.DeleteProductControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagerUserControl</servlet-name>
+        <servlet-class>control.admin.ManagerUserControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditChangeSellControl</servlet-name>
+        <servlet-class>control.admin.EditChangeSellControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditChangeAdminControl</servlet-name>
+        <servlet-class>control.admin.EditChangeAdminControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditChangeStatusControl</servlet-name>
+        <servlet-class>control.admin.EditChangeStatusControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>homeControl</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -71,5 +87,21 @@
     <servlet-mapping>
         <servlet-name>DeleteControl</servlet-name>
         <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerUserControl</servlet-name>
+        <url-pattern>/manageruser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditChangeSellControl</servlet-name>
+        <url-pattern>/editsell</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditChangeAdminControl</servlet-name>
+        <url-pattern>/editadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditChangeStatusControl</servlet-name>
+        <url-pattern>/editstatus</url-pattern>
     </servlet-mapping>
 </web-app>

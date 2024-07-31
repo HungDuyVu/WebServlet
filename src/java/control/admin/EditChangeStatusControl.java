@@ -1,19 +1,24 @@
-package control.web;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
+package control.admin;
 
 import dao.DAOUser;
 import entity.Account;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author OS
  */
-public class LoginControl extends HttpServlet {
+public class EditChangeStatusControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -25,31 +30,34 @@ public class LoginControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        DAOUser daoU = new DAOUser();
-        
-        Account account = daoU.login(username, password);
-        if (account == null) {
-            // Tài khoản không tồn tại hoặc mật khẩu không đúng
-            request.setAttribute("mess", "Incorrect username or password.");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        } else {
-            // Kiểm tra trạng thái tài khoản
-            if (account.getStatus() == Account.Status.IS_ACTIVE) {
-                // Trạng thái là isActive, cho phép đăng nhập
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", account);
-                // Chuyển trang mà cần mang theo dữ liệu
-                request.getRequestDispatcher("home").forward(request, response);
-            } else {
-                // Trạng thái không phải isActive, không cho phép đăng nhập
-                request.setAttribute("mess", "Account is not active. Please contact support.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+        String uID = request.getParameter("uID");
+        String statusF = request.getParameter("status");
+
+        if (uID != null && statusF != null) {
+            try {
+                // Chuyển đổi giá trị trạng thái từ chuỗi thành enum
+                Account.Status status = Account.Status.fromValue(statusF);
+                DAOUser daoU = new DAOUser();
+                
+                // Thay đổi trạng thái tài khoản
+                daoU.changeStatusAccount(uID, status);
+                
+                // Chuyển hướng về trang ManagerAccount.jsp
+                response.sendRedirect("ManagerAccount.jsp");
+            } catch (Exception e) {
+                // Xử lý lỗi và chuyển hướng về trang lỗi
+                e.printStackTrace();
+                request.setAttribute("error", "An error occurred while changing status.");
+                request.getRequestDispatcher("ManagerAccount.jsp").forward(request, response);
             }
+        } else {
+            // Xử lý trường hợp thiếu thông tin
+            request.setAttribute("error", "User ID and status are required.");
+            request.getRequestDispatcher("ManagerAccount.jsp").forward(request, response);
         }
     } 
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -60,7 +68,7 @@ public class LoginControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       
     } 
 
     /** 
@@ -83,5 +91,6 @@ public class LoginControl extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }

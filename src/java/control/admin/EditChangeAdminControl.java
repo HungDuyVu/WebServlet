@@ -1,19 +1,23 @@
-package control.web;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
+package control.admin;
 
 import dao.DAOUser;
-import entity.Account;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author OS
  */
-public class LoginControl extends HttpServlet {
+public class EditChangeAdminControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -25,31 +29,15 @@ public class LoginControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
+        String uID = request.getParameter("uID"); 
+        String isAdmin = request.getParameter("isAdmin");
         DAOUser daoU = new DAOUser();
         
-        Account account = daoU.login(username, password);
-        if (account == null) {
-            // Tài khoản không tồn tại hoặc mật khẩu không đúng
-            request.setAttribute("mess", "Incorrect username or password.");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        } else {
-            // Kiểm tra trạng thái tài khoản
-            if (account.getStatus() == Account.Status.IS_ACTIVE) {
-                // Trạng thái là isActive, cho phép đăng nhập
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", account);
-                // Chuyển trang mà cần mang theo dữ liệu
-                request.getRequestDispatcher("home").forward(request, response);
-            } else {
-                // Trạng thái không phải isActive, không cho phép đăng nhập
-                request.setAttribute("mess", "Account is not active. Please contact support.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
-        }
+        daoU.changeRoleSell(uID, isAdmin);
+        response.sendRedirect("ManagerAccount.jsp");
     } 
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -83,5 +71,6 @@ public class LoginControl extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }
