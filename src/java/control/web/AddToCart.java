@@ -39,7 +39,7 @@ public class AddToCart extends HttpServlet {
                 DAOProduct daoProduct = new DAOProduct();
                 DAOCart daoCart = new DAOCart();
 
-                // Fetch or create the user's cart
+                // Lấy hoặc tạo giỏ hàng của người dùng
                 Cart cart = Optional.ofNullable(daoCart.getCartByUserId(userId))
                                     .orElseGet(() -> {
                     try {
@@ -51,28 +51,28 @@ public class AddToCart extends HttpServlet {
                 });
 
                 if (cart != null) {
-                    // Retrieve product details
+                    // Lấy thông tin sản phẩm
                     Product product = daoProduct.getProductByID(String.valueOf(productId));
                     if (product != null) {
-                        // Create a cart item
-                        CartItem item = new CartItem(0, product.getId(), product.getPrice(), 1, "defaultSize");
+                        // Tạo đối tượng CartItem với thông tin sản phẩm
+                        CartItem item = new CartItem(product.getId(), product.getPrice(), 1, "defaultSize", cart.getId());
 
-                        // Add the item to the cart
+                        // Thêm sản phẩm vào giỏ hàng
                         daoCart.addOrUpdateProductInCart(cart.getId(), item);
 
-                        // Update cart count in session
+                        // Cập nhật số lượng sản phẩm trong giỏ hàng
                         int cartCount = daoCart.getCartSize(cart.getId());
                         session.setAttribute("cartCount", cartCount);
                     }
                 }
 
             } catch (NumberFormatException | NullPointerException e) {
-                e.printStackTrace();
+                Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, "Invalid input", e);
             } catch (Exception ex) {
                 Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        response.sendRedirect("HomeControl"); // Redirect to home page or another relevant page
+        response.sendRedirect("HomeControl"); // Chuyển hướng về trang chủ hoặc trang thích hợp khác
     }
 }
