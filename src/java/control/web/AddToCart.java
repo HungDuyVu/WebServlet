@@ -18,17 +18,17 @@ import java.util.logging.Logger;
 
 @WebServlet("/AddToCart")
 public class AddToCart extends HttpServlet {
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         addToCart(request, response);
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         addToCart(request, response);
     }
-    
+
     private void addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("userId");
@@ -55,14 +55,14 @@ public class AddToCart extends HttpServlet {
                     Product product = daoProduct.getProductByID(String.valueOf(productId));
                     if (product != null) {
                         // Create a cart item
-                        CartItem item = new CartItem(product.getId(), product.getPrice(), 1, "defaultSize");
+                        CartItem item = new CartItem(0, product.getId(), product.getPrice(), 1, "defaultSize");
 
                         // Add the item to the cart
-                        daoCart.addProductToCart(cart.getId(), item);
+                        daoCart.addOrUpdateProductInCart(cart.getId(), item);
 
                         // Update cart count in session
                         int cartCount = daoCart.getCartSize(cart.getId());
-                        session.setAttribute("cartCount", cartCount); // <-- This is the line to update the cart count in the session
+                        session.setAttribute("cartCount", cartCount);
                     }
                 }
 
