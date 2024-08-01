@@ -221,7 +221,7 @@ public class DAOCart {
         return total;
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         DAOCart daoCart = new DAOCart();
 
         // Tạo giỏ hàng mới hoặc lấy giỏ hàng hiện có cho userId = 1
@@ -229,9 +229,9 @@ public class DAOCart {
         System.out.println("Using cart with ID: " + cart.getId());
 
         // Thêm sản phẩm vào giỏ hàng
-        CartItem item1 = new CartItem(1, 15.0, 2, "40", cart.getId());
+        CartItem item1 = new CartItem(3, 15.0, 2, "40", cart.getId());
         daoCart.addOrUpdateProductInCart(cart.getId(), item1);
-        CartItem item2 = new CartItem(2, 20.0, 1, "41", cart.getId());
+        CartItem item2 = new CartItem(3, 20.0, 1, "41", cart.getId());
         daoCart.addOrUpdateProductInCart(cart.getId(), item2);
 //        System.out.println("Added items: " + item1 + ", " + item2);
 
@@ -264,5 +264,5 @@ public class DAOCart {
         // Lấy danh sách sản phẩm trong giỏ hàng sau khi xóa
         cart = daoCart.getCartByUserId(1);
         System.out.println("Final cart items: " + cart.getItems());
-    }
+    }*/
 }
