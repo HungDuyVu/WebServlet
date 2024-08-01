@@ -2,6 +2,7 @@ package control.web;
 
 import dao.DAOCart;
 import dao.DAOProduct;
+import entity.Account;
 import entity.Cart;
 import entity.CartItem;
 import entity.Product;
@@ -31,9 +32,11 @@ public class AddToCart extends HttpServlet {
 
     private void addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId");
+        Account account = (Account) session.getAttribute("acc"); // Lấy đối tượng account từ session
 
-        if (userId != null) {
+        if (account != null) {
+            Integer userId = account.getId(); // Lấy userId từ account
+
             try {
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 DAOProduct daoProduct = new DAOProduct();
@@ -69,6 +72,7 @@ public class AddToCart extends HttpServlet {
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
 
-        response.sendRedirect("HomeControl"); // Chuyển hướng về trang chủ hoặc trang thích hợp khác
+        response.sendRedirect("home"); // Chuyển hướng về trang chủ hoặc trang thích hợp khác
     }
+
 }

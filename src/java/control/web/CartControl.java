@@ -2,6 +2,7 @@ package control.web;
 
 import dao.DAOCart;
 import entity.Cart;
+import entity.Account;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,9 +17,11 @@ public class CartControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId");
+        Account account = (Account) session.getAttribute("acc");
 
-        if (userId != null) {
+        if (account != null) {
+            Integer userId = account.getId();
+            
             DAOCart daoCart = new DAOCart();
             try {
                 Cart cart = daoCart.getCartByUserId(userId);
@@ -30,7 +33,7 @@ public class CartControl extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("Login.jsp");
         }
     }
 }
