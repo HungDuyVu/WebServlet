@@ -11,8 +11,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class DAOCart {
 
     // Lấy giỏ hàng của người dùng từ cơ sở dữ liệu
@@ -35,9 +33,13 @@ public class DAOCart {
         return cart;
     }
 
-    // Tạo giỏ hàng mới cho người dùng
-    public Cart createCart(int userId) throws Exception {
-        Cart cart = null;
+    // Tạo hoặc lấy giỏ hàng hiện có cho người dùng
+    public Cart createOrGetCart(int userId) throws Exception {
+        Cart cart = getCartByUserId(userId); // Kiểm tra giỏ hàng hiện tại của người dùng
+        if (cart != null) {
+            return cart; // Nếu đã có giỏ hàng, trả về giỏ hàng hiện tại
+        }
+        // Nếu không có giỏ hàng, tạo mới
         try (Connection conn = new DBContext().getConnection()) {
             String sql = "INSERT INTO Cart (user_id) VALUES (?)";
             try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -219,59 +221,48 @@ public class DAOCart {
         return total;
     }
 
+    public static void main(String[] args) throws Exception {
+        DAOCart daoCart = new DAOCart();
 
-    
-    public static void main(String[] args) {
-        try {
-            DAOCart daoCart = new DAOCart();
+        // Tạo giỏ hàng mới hoặc lấy giỏ hàng hiện có cho userId = 1
+        Cart cart = daoCart.createOrGetCart(1);
+        System.out.println("Using cart with ID: " + cart.getId());
 
-            // Tạo giỏ hàng mới cho userId = 1
-            Cart newCart = daoCart.createCart(1);
-            int cartId = newCart.getId();
-            System.out.println("Created new cart with ID: " + cartId);
+        // Thêm sản phẩm vào giỏ hàng
+        CartItem item1 = new CartItem(1, 15.0, 2, "L", cart.getId());
+        daoCart.addOrUpdateProductInCart(cart.getId(), item1);
+        CartItem item2 = new CartItem(2, 20.0, 1, "M", cart.getId());
+        daoCart.addOrUpdateProductInCart(cart.getId(), item2);
+//        System.out.println("Added items: " + item1 + ", " + item2);
 
-            // Thêm sản phẩm vào giỏ hàng
-            CartItem item1 = new CartItem(1, 15.0, 2, "L", cartId);
-            daoCart.addOrUpdateProductInCart(cartId, item1);
-            System.out.println("Added item: " + item1);
+        // Cập nhật sản phẩm trong giỏ hàng
+        item1.setQuantity(5);
+        item1.setPrice(14.99);
+        daoCart.addOrUpdateProductInCart(cart.getId(), item1);
+//        System.out.println("Updated item: " + item1);
 
-            CartItem item2 = new CartItem(2, 20.0, 1, "M", cartId);
-            daoCart.addOrUpdateProductInCart(cartId, item2);
-            System.out.println("Added item: " + item2);
+        // Tính tổng giá tiền của giỏ hàng
+        double totalPrice = daoCart.getTotalCartPrice(cart.getId());
+//        System.out.println("Total cart price: " + totalPrice);
 
-            // Cập nhật sản phẩm trong giỏ hàng
-            item1.setQuantity(5);
-            item1.setPrice(14.99);
-            daoCart.addOrUpdateProductInCart(cartId, item1);
-            System.out.println("Updated item: " + item1);
+        // Tăng số lượng sản phẩm
+        daoCart.incrementProductQuantity(cart.getId(), 1);
+//        System.out.println("Incremented quantity of product 1");
 
-            // Tính tổng giá tiền của giỏ hàng
-            double totalPrice = daoCart.getTotalCartPrice(cartId);
-            System.out.println("Total cart price: " + totalPrice);
+        // Giảm số lượng sản phẩm
+        daoCart.decrementProductQuantity(cart.getId(), 1);
+//        System.out.println("Decremented quantity of product 1");
 
-            // Tăng số lượng sản phẩm
-            daoCart.incrementProductQuantity(cartId, 1);
-            System.out.println("Incremented quantity of product 1");
+        // Lấy danh sách sản phẩm trong giỏ hàng sau khi cập nhật
+        cart = daoCart.getCartByUserId(1);
+//        System.out.println("Cart items after updates: " + cart.getItems());
 
-            // Giảm số lượng sản phẩm
-            daoCart.decrementProductQuantity(cartId, 1);
-            System.out.println("Decremented quantity of product 1");
+        // Xóa sản phẩm khỏi giỏ hàng
+        daoCart.removeCartItem(cart.getId(), 2);
+//        System.out.println("Removed product with ID 2 from cart");
 
-            // Lấy danh sách sản phẩm trong giỏ hàng sau khi cập nhật
-            Cart updatedCart = daoCart.getCartByUserId(1);
-            System.out.println("Cart items after updates: " + updatedCart.getItems());
-
-            // Xóa sản phẩm khỏi giỏ hàng
-            daoCart.removeCartItem(cartId, 2);
-            System.out.println("Removed product with ID 2 from cart");
-
-            // Lấy danh sách sản phẩm trong giỏ hàng sau khi xóa
-            Cart finalCart = daoCart.getCartByUserId(1);
-            System.out.println("Final cart items: " + finalCart.getItems());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Lấy danh sách sản phẩm trong giỏ hàng sau khi xóa
+        cart = daoCart.getCartByUserId(1);
+        System.out.println("Final cart items: " + cart.getItems());
     }
-
 }
