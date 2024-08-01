@@ -40,15 +40,7 @@ public class AddToCart extends HttpServlet {
                 DAOCart daoCart = new DAOCart();
 
                 // Lấy hoặc tạo giỏ hàng của người dùng
-                Cart cart = Optional.ofNullable(daoCart.getCartByUserId(userId))
-                                    .orElseGet(() -> {
-                    try {
-                        return daoCart.createCart(userId);
-                    } catch (Exception ex) {
-                        Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
-                        return null;
-                    }
-                });
+                Cart cart = daoCart.createOrGetCart(userId);
 
                 if (cart != null) {
                     // Lấy thông tin sản phẩm
