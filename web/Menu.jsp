@@ -20,12 +20,12 @@
                 <ul class="navbar-nav ml-auto">
                     <c:if test="${sessionScope.acc.isAdmin == 1}">
                         <li class="nav-item">
-                            <a class="nav-link" href="manageAccount">Manager Account</a>
+                            <a class="nav-link" href="ManageAccount">Manager Account</a>
                         </li>
                     </c:if>
                     <c:if test="${sessionScope.acc.isSell == 1}">
                         <li class="nav-item">
-                            <a class="nav-link" href="manageProduct">Manager Product</a>
+                            <a class="nav-link" href="manager">Manager Product</a>
                         </li>
                     </c:if>
                     <c:if test="${sessionScope.acc != null}">
@@ -51,7 +51,7 @@
                             </button>
                         </div>
                     </div>
-                    <a class="btn btn-success btn-sm ml-3" href="cart">
+                    <a class="btn btn-success btn-sm ml-3" href="CartViewControl">
                         <i class="fa fa-shopping-cart"></i> Cart
                         <span class="badge badge-light" id="cart-count">${sessionScope.cartCount}</span>
                     </a>
