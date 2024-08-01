@@ -10,17 +10,23 @@ public class CartItem {
     private double price;
     private int quantity;
     private String size;
+    private int cartId; 
 
-    public CartItem(int id, int productId, double price, int quantity, String size) {
+    public CartItem(int id, int productId, double price, int quantity, String size, int cartId) {
         this.id = id;
         this.productId = productId;
         this.price = price;
         this.quantity = quantity;
         this.size = size;
+        this.cartId = cartId;
     }
 
-    public CartItem(int id, double price, int i, String defaultSize) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public CartItem(int productId, double price, int quantity, String size, int cartId) {
+        this.productId = productId;
+        this.price = price;
+        this.quantity = quantity;
+        this.size = size;
+        this.cartId = cartId;
     }
 
     // Getter và Setter
@@ -28,40 +34,47 @@ public class CartItem {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getProductId() {
         return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public String getSize() {
         return size;
     }
 
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public void setSize(String size) {
         this.size = size;
     }
-}
 
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+}

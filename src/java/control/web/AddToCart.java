@@ -18,18 +18,18 @@ import java.util.logging.Logger;
 
 @WebServlet("/AddToCart")
 public class AddToCart extends HttpServlet {
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         addToCart(request, response);
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         addToCart(request, response);
     }
-    
-    private void addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    private void addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("userId");
 
@@ -39,40 +39,36 @@ public class AddToCart extends HttpServlet {
                 DAOProduct daoProduct = new DAOProduct();
                 DAOCart daoCart = new DAOCart();
 
-                // Fetch or create the user's cart
-                Cart cart = Optional.ofNullable(daoCart.getCartByUserId(userId))
-                                    .orElseGet(() -> {
-                    try {
-                        return daoCart.createCart(userId);
-                    } catch (Exception ex) {
-                        Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
-                        return null;
-                    }
-                });
+                // Lấy hoặc tạo giỏ hàng của người dùng
+                Cart cart = daoCart.createOrGetCart(userId);
 
                 if (cart != null) {
-                    // Retrieve product details
+                    // Lấy thông tin sản phẩm
                     Product product = daoProduct.getProductByID(String.valueOf(productId));
                     if (product != null) {
-                        // Create a cart item
-                        CartItem item = new CartItem(product.getId(), product.getPrice(), 1, "defaultSize");
+                        // Tạo đối tượng CartItem với thông tin sản phẩm
+                        CartItem item = new CartItem(product.getId(), product.getPrice(), 1, "defaultSize", cart.getId());
 
-                        // Add the item to the cart
-                        daoCart.addProductToCart(cart.getId(), item);
+                        // Thêm sản phẩm vào giỏ hàng
+                        daoCart.addOrUpdateProductInCart(cart.getId(), item);
 
-                        // Update cart count in session
+                        // Cập nhật số lượng sản phẩm trong giỏ hàng
                         int cartCount = daoCart.getCartSize(cart.getId());
-                        session.setAttribute("cartCount", cartCount); // <-- This is the line to update the cart count in the session
+                        session.setAttribute("cartCount", cartCount);
                     }
                 }
 
             } catch (NumberFormatException | NullPointerException e) {
-                e.printStackTrace();
+                Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, "Invalid input", e);
             } catch (Exception ex) {
                 Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            String mess = "Please log in to perform this function";
+            request.setAttribute("messErrorCart", mess);
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
 
-        response.sendRedirect("HomeControl"); // Redirect to home page or another relevant page
+        response.sendRedirect("HomeControl"); // Chuyển hướng về trang chủ hoặc trang thích hợp khác
     }
 }

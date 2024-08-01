@@ -3,17 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Learn/WebServlet/webbtn/src/java/entity/Account.java</file>
+            <file>file:/D:/Learn/WebServlet/webbtn/src/java/entity/CartItem.java</file>
             <file>file:/D:/Learn/WebServlet/webbtn/src/java/dao/DAOCart.java</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/src/java/entity/Product.java</file>
             <file>file:/D:/Learn/WebServlet/webbtn/src/java/context/DBContext.java</file>
             <file>file:/D:/Learn/WebServlet/webbtn/src/java/control/web/HomeControl.java</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/web/Home.jsp</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/src/java/entity/Category.java</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/src/java/dao/DAOUser.java</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/src/java/control/web/LoginControl.java</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/web/Login.jsp</file>
-            <file>file:/D:/Learn/WebServlet/webbtn/src/java/dao/DAOProduct.java</file>
+            <file>file:/D:/Learn/WebServlet/webbtn/src/java/control/web/AddToCart.java</file>
+            <file>file:/D:/Learn/WebServlet/webbtn/src/java/entity/Cart.java</file>
         </group>
     </open-files>
 </project-private>
