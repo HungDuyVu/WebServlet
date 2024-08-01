@@ -229,9 +229,9 @@ public class DAOCart {
         System.out.println("Using cart with ID: " + cart.getId());
 
         // Thêm sản phẩm vào giỏ hàng
-        CartItem item1 = new CartItem(1, 15.0, 2, "L", cart.getId());
+        CartItem item1 = new CartItem(1, 15.0, 2, "40", cart.getId());
         daoCart.addOrUpdateProductInCart(cart.getId(), item1);
-        CartItem item2 = new CartItem(2, 20.0, 1, "M", cart.getId());
+        CartItem item2 = new CartItem(2, 20.0, 1, "41", cart.getId());
         daoCart.addOrUpdateProductInCart(cart.getId(), item2);
 //        System.out.println("Added items: " + item1 + ", " + item2);
 
