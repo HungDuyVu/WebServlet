@@ -61,7 +61,7 @@
                                 <aside class="col-sm-5 border-right">
                                     <article class="gallery-wrap"> 
                                         <div class="img-big-wrap">
-                                            <div> <a href="#"><img src="${detail.image}"></a></div>
+                                            <div> <a href="#"><img src="${detail.imageUrls[0]}"></a></div>
                                         </div> <!-- slider-product.// -->
                                         <div class="img-small-wrap">
                                         </div> <!-- slider-nav.// -->

@@ -331,6 +331,11 @@ public class DAOProduct {
         return list;
     }
     
+//    frontend
+//    servlet
+//    dao
+//    db
+    
     // GET PRODUCT WIT ID LAST
     public Product getLast() {
         String queryProduct = "SELECT TOP 1 * FROM Product ORDER BY id DESC";

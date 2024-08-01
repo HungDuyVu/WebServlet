@@ -15,7 +15,7 @@
     <div class="card bg-light mb-3">
         <div class="card-header bg-success text-white text-uppercase">Last product</div>
         <div class="card-body">
-            <img class="img-fluid" src="${p.image}" />
+            <img class="img-fluid" src="${p.imageUrls[0]}" />
             <h5 class="card-title">${p.name}</h5>
             <p class="card-text">${p.title}</p>
             <p class="bloc_left_price">${p.price} $</p>
