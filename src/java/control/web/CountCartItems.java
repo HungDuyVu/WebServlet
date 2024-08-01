@@ -16,22 +16,21 @@ public class CountCartItems extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId"); // Assuming userId is stored in session
+        Integer userId = (Integer) session.getAttribute("userId");
 
-        int count = 0;
         if (userId != null) {
             DAOCart daoCart = new DAOCart();
             try {
                 Cart cart = daoCart.getCartByUserId(userId);
-                if (cart != null) {
-                    count = daoCart.getCartSize(cart.getId());
-                }
+                int cartCount = (cart != null) ? daoCart.getCartSize(cart.getId()) : 0;
+                session.setAttribute("cartCount", cartCount); // Cập nhật session với số lượng sản phẩm trong giỏ hàng
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            session.setAttribute("cartCount", 0); // Đặt số lượng sản phẩm là 0 nếu người dùng chưa đăng nhập
         }
 
-        request.setAttribute("cartCount", count);
         request.getRequestDispatcher("Menu.jsp").forward(request, response);
     }
 }

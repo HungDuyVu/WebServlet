@@ -29,7 +29,7 @@ public class AddToCart extends HttpServlet {
         addToCart(request, response);
     }
 
-    private void addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("userId");
 
@@ -63,6 +63,10 @@ public class AddToCart extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            String mess = "Please log in to perform this function";
+            request.setAttribute("messErrorCart", mess);
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
 
         response.sendRedirect("HomeControl"); // Chuyển hướng về trang chủ hoặc trang thích hợp khác

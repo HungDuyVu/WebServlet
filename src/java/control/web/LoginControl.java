@@ -27,6 +27,7 @@ public class LoginControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
+        
         DAOUser daoU = new DAOUser();
         
         Account account = daoU.login(username, password);
